@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
     'http://rubygems.org/gems/gitlab_git'
 
   s.add_dependency("gitlab-linguist", "~> 3.0")
-  s.add_dependency("activesupport", "~> 4.0")
+  s.add_dependency("activesupport", "~> 3.2.11")
   s.add_dependency("rugged", "~> 0.21.0")
   s.add_dependency("charlock_holmes", "~> 0.6")
 end
