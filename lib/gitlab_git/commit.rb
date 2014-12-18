@@ -138,10 +138,6 @@ module Gitlab
         @safe_message ||= message
       end
       
-      def utf8_message
-        encode! message
-      end
-
       def created_at
         committed_date
       end
@@ -255,11 +251,11 @@ module Gitlab
       def init_from_rugged(commit)
         @raw_commit = commit
         @id = commit.oid
-        @message = commit.message
+        @message = encode!(commit.message.try(:dup))
         @authored_date = commit.author[:time]
         @committed_date = commit.committer[:time]
-        @author_name = commit.author[:name]
-        @author_email = commit.author[:email]
+        @author_name = encode!(commit.author[:name].try(:dup))
+        @author_email = encode!(commit.author[:email].try(:dup))
         @committer_name = commit.committer[:name]
         @committer_email = commit.committer[:email]
         @parent_ids = commit.parents.map(&:oid)
