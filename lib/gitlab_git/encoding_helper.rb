@@ -13,8 +13,11 @@ module EncodingHelper
     return message.force_encoding("BINARY") if detect && detect[:type] == :binary
 
     # encoding message to detect encoding
-    if detect && detect[:encoding]
+    if detect && detect[:confidence] == 100
       message.force_encoding(detect[:encoding])
+    else
+      detect = CharDet.detect(message)
+      message.force_encoding(detect[:encoding]) if detect.confidence > 0.6
     end
 
     # encode and clean the bad chars
