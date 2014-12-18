@@ -2,6 +2,8 @@
 module Gitlab
   module Git
     class Commit
+      include EncodingHelper
+      
       attr_accessor :raw_commit, :head, :refs
 
       SERIALIZE_KEYS = [
@@ -134,6 +136,10 @@ module Gitlab
 
       def safe_message
         @safe_message ||= message
+      end
+      
+      def utf8_message
+        encode! message
       end
 
       def created_at
